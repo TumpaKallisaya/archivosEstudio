@@ -1,0 +1,50 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/template.xhtml">
+
+	<f:metadata>
+		<f:event type="preRenderView" listener="#{solicitudIngsalController.initSolicitud()}" />
+	</f:metadata>
+
+	<ui:define name="content"><div class="layout-portlets-box"><div class="Container100">
+		<h:form id="Tramite"  enctype="multipart/form-data">
+			<p:messages styleClass="" closable="true" showDetail="true" />
+			<h1>Crear una nueva solicitud de Ingreso/Salida de un bien</h1>
+			<br />
+			<h:panelGrid columns="2" border="0" columnClasses="col,col" rowClasses="row">
+				<h:outputLabel value="Usuario solicitante: " for="usuSol" styleClass="label" />
+				<p:selectOneMenu id="usuSol" value="#{solicitudIngsalController.solIngsalBienBean.idUsuSolicitante}">					
+					<f:selectItem  itemValue="" itemLabel=""/>
+					<f:selectItems value="#{usuariosController.usuarios}" var="usuario" itemLabel="#{usuario.nombreCompleto}" itemValue="#{usuario.idUsuario}" />							
+				</p:selectOneMenu>
+				
+				<h:outputLabel value="Tipo de solicitud: " for="tipSol" styleClass="label" />
+				<p:selectOneMenu id="tipSol" value="#{solicitudIngsalController.solIngsalBienBean.ingresoSalida}">					
+					<f:selectItem  itemValue="" itemLabel=""/>
+					<f:selectItems value="#{solicitudIngsalController.ingresoSalida}" var="ingresoSalida" itemLabel="#{ingresoSalida.value}"  />							
+				</p:selectOneMenu>
+				
+				<h:outputLabel for="motivo" value="Motivo: " />
+				<p:inputTextarea id="motivo" maxlength="4000" rows="4" cols="35" value="#{solicitudIngsalController.solIngsalBienBean.motivo}" />
+				
+				<h:outputLabel for="descripcion" value="Descripción: " />
+				<p:inputTextarea id="descripcion" maxlength="4000" rows="4" cols="35" value="#{solicitudIngsalController.solIngsalBienBean.descripcion}" />
+				
+				<h:outputLabel for="fechadesde" value="Fecha desde: " />
+				<p:calendar id="fechadesde" placeholder="Desde" value="#{solicitudIngsalController.solIngsalBienBean.fechaDesde}">
+				</p:calendar>
+				
+				<h:outputLabel for="fechahasta" value="Fecha hasta: " />
+				<p:calendar id="fechahasta" placeholder="Hasta" value="#{solicitudIngsalController.solIngsalBienBean.fechaHasta}">
+				</p:calendar>
+        	</h:panelGrid>
+        	<br />
+        	<p:commandButton value="Guardar" action="#{solicitudIngsalController.guardarSolicitud}" ajax="false" />
+        	<p:commandButton value="Cancelar" style="background:red !important;" action="#{solicitudIngsalController.guardarSolicitud}" ajax="false" />
+        	<p:commandButton value="Lista detallada de bienes" style="background:red !important;" action="#{solicitudIngsalController.irDetalleSolicitud()}" ajax="false" />
+		</h:form>
+	</div></div></ui:define>
+</ui:composition>

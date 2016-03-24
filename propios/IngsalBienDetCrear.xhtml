@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
+     
+    <h:head>
+        <title> Crear Detalle</title>
+       	<h:outputStylesheet name="./css/uifUnaCol.css" />
+        <f:metadata>
+			<f:event type="preRenderView" listener="#{ingsalBienDetController.initIngsalDet()}" />
+		</f:metadata>
+    </h:head>
+     
+    <h:body style="background: none !important;">
+    <h:form>
+       	<p:messages styleClass="" closable="true" showDetail="true" />
+		<h1>Crear detalle de la solicitud</h1>
+		
+		<p:inputText id="tipoProceso" rendered="false"></p:inputText>
+		
+		<br />
+		
+			<h:panelGroup layout="block" id="grupoIngrerso" rendered="#{ingresoSalida=='6118'?true:false}">
+				<h:panelGrid columns="2" border="0" columnClasses="col,col" rowClasses="row" style="margin-bottom:20px;">
+					<h:outputLabel for="activo" value="Activo: " />
+					<p:autoComplete id="activo" value="#{ingsalBienDetController.ingsalBienDetBean.idActivo}" completeMethod="#{ingsalBienDetController.autocompletarTmpActFijos}"
+                        var="tmpActivoFIjo" itemLabel="#{tmpActivoFIjo.codigoExtendido}" itemValue="#{tmpActivoFIjo}" forceSelection="true" />
+ 
+					<!--  <p:inputText id="idActivo" size="60" value="#{ingsalBienDetController.ingsalBienDetBean.idActivo}" />-->
+				</h:panelGrid>
+				
+					<p:outputLabel value="Datos del Activo: "></p:outputLabel>
+					<h:panelGrid columns="2" border="0" columnClasses="col,col" rowClasses="row" style="margin-bottom:20px;">
+					
+						<p:graphicImage name="demo/images/misc/kobe.png" />
+						<p:panelGrid columns="2">
+						    <h:outputText value="Name:" />
+						    <h:outputText value="Lorem ipsum dolor sit amet, consectetur adipiscing elit. In at tincidunt ex. Suspendisse faucibus est sapien, eget elementum odio tincidunt accumsan. " />
+						 
+						    <h:outputText value="Team:" />
+						    <h:outputText value="Los Angeles Lakers" />
+						 
+						    <h:outputText value="Position:" />
+						    <h:outputText value="Shooting Guard" />
+						 
+						    <h:outputText value="Number:" />
+						    <h:outputText value="24" />
+					    </p:panelGrid>
+					</h:panelGrid>
+					
+				<h:panelGrid columns="2" border="0" columnClasses="col,col" rowClasses="row">	
+					<h:outputLabel value="Acces. no inventariados: " for="accesNoInv" styleClass="label" />
+					<p:selectOneMenu id="accesNoInv" value="#{ingsalBienDetController.ingsalBienDetBean.accesNoInv}">					
+						<f:selectItem  itemValue="" itemLabel=""/>
+						<f:selectItem itemValue="SI" var="accesNoInv" itemLabel="SI"  />
+						<f:selectItem itemValue="NO" var="accesNoInv" itemLabel="NO"  />							
+					</p:selectOneMenu>
+					
+					<h:outputLabel for="detalleAccesNoInv" value="Detalle Acces. no inventariados: " />
+					<p:inputTextarea id="detalleAccesNoInv" maxlength="4000" rows="3" cols="60" value="#{ingsalBienDetController.ingsalBienDetBean.detalleAccesNoInv}" />
+				</h:panelGrid>
+			</h:panelGroup>
+			
+			<h:panelGroup layout="block" id="grupoSalida" rendered="#{ingresoSalida=='6117'?true:false}">
+				<h:panelGrid columns="2" border="0" columnClasses="col,col" rowClasses="row">
+					<h:outputLabel for="bienExtDescripcion" value="Descripción: " />
+					<p:inputText id="bienExtDescripcion" size="60" value="#{ingsalBienDetController.ingsalBienDetBean.bienExtDescripcion}" />
+					
+					<h:outputLabel for="bienExtMarca" value="Marca: " />
+					<p:inputText id="bienExtMarca" size="30"  value="#{ingsalBienDetController.ingsalBienDetBean.bienExtMarca}" />
+					
+					<h:outputLabel for="bienExtSerie" value="Serie: " />
+					<p:inputText id="bienExtSerie" size="30" value="#{ingsalBienDetController.ingsalBienDetBean.bienExtSerie}" />
+					
+					<h:outputLabel for="bienExtAccesorios" value="Accesorios: " />
+					<p:inputTextarea id="bienExtAccesorios" maxlength="4000" rows="3" cols="60" value="#{ingsalBienDetController.ingsalBienDetBean.bienExtAccesorios}" />
+						
+					<h:outputLabel for="bienExtObs" value="Observación: " />
+					<p:inputTextarea id="bienExtObs" maxlength="4000" rows="3" cols="60" value="#{ingsalBienDetController.ingsalBienDetBean.bienExtObs}" />
+				</h:panelGrid>
+			</h:panelGroup>
+			
+			
+        
+        <br />
+		
+		<p:commandButton value="Guardar" action="#{ingsalBienDetController.guardarIngsalDet}" />
+        <p:commandButton value="Cancelar" style="background:red !important;" action="#{solicitudIngsalController.guardarSolicitud}" ajax="false" />
+	</h:form>
+    </h:body>
+     
+</html>

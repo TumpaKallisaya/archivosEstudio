@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <f:metadata>
+        <f:event type="preRenderView" listener="#{solicitudIngsalController.listaSolicitudesIngsal()}" />
+    </f:metadata>
+    <ui:define name="content">
+        <div class="layout-portlets-box">
+            <div class="Container100">
+            	<p:messages styleClass="" closable="true" showDetail="true" />
+                <div class="ContainerIndent">
+                    
+                    <h:form id="agregarSolictudIngSal">
+                        <h1>Lista de Solicitudes de Ingreso/Salida de bienes</h1>
+                        <p:commandButton value="Crear solicitud" action="#{solicitudIngsalController.crearSolicitud}" ajax="false" />
+                        
+                        <p:dataTable id="datosListaIngsal" value="#{solicitudIngsalController.listaIngsal}" var="listaIngsal" paginator="true" rows="10" emptyMessage="No se encontraron registros">
+							<p:column headerText="Opciones">
+								<p:commandButton type="submit" value="Editar" icon="ui-icon-extlink" action="#{solicitudIngsalController.editar(listaIngsal.idSolIngsal, listaIngsal.ingresoSalida)}" />
+							</p:column> 
+							
+							<p:column filterBy="#{listaIngsal.nomsol}" sortBy="#{listaIngsal.nomsol}" headerText="Solicitante">
+								<h:outputText value="#{listaIngsal.nomsol} #{listaIngsal.papesol} #{listaIngsal.sapesol}" />
+							</p:column>
+							<p:column filterBy="#{listaIngsal.descIngSal}" sortBy="#{listaIngsal.descIngSal}" headerText="Tipo de Solicitud">
+								<h:outputText value="#{listaIngsal.descIngSal}" />
+							</p:column>
+							<p:column filterBy="#{listaIngsal.motivo}" sortBy="#{listaIngsal.motivo}" headerText="Motivo">
+								<h:outputText value="#{listaIngsal.motivo}" />
+							</p:column>
+							<p:column filterBy="#{listaIngsal.fechaDesde}" sortBy="#{listaIngsal.fechaDesde}" headerText="Desde">
+								<h:outputText value="#{listaIngsal.fechaDesde}" >
+									<f:convertDateTime type="date" pattern="dd-MM-yyyy"/>
+								</h:outputText>
+							</p:column>
+							<p:column filterBy="#{listaIngsal.fechaHasta}" sortBy="#{listaIngsal.fechaHasta}" headerText="Hasta">
+								<h:outputText value="#{listaIngsal.fechaHasta}" pattern="dd-MM-yyyy" >
+									<f:convertDateTime type="date" pattern="dd-MM-yyyy"/>
+								</h:outputText>
+							</p:column>
+							<p:column filterBy="#{listaIngsal.nomaut}"  sortBy="#{listaIngsal.nomaut}" headerText="Autorizador">
+								<h:outputText value="#{listaIngsal.nomaut} #{listaIngsal.papeaut} #{listaIngsal.sapeaut}" />
+							</p:column>
+							<p:column headerText="Detalle Bienes">
+								<p:commandButton value="Ver Bienes" action="#{solicitudIngsalController.verDetalleSolicitud(listaIngsal.idSolIngsal, listaIngsal.ingresoSalida)}" />
+							</p:column>
+							
+						</p:dataTable>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+    </ui:define>
+</ui:composition>

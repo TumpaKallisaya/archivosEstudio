@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <f:metadata>
+        <f:event type="preRenderView" listener="#{ingsalBienDetController.listaIngsalBienDet()}" />
+    </f:metadata>
+    <ui:define name="content">
+        <div class="layout-portlets-box">
+            <div class="Container100">
+            	<p:messages styleClass="" closable="true" showDetail="true" />
+                <div class="ContainerIndent">
+                    
+					<h:form id="listaBienesdet">
+                    	<h1>Lista detalle para el Ingreso/Salida de bienes</h1>
+                        <p:commandButton value="Agregar detalle" actionListener="#{ingsalBienDetController.crearIngsalDet}" rendered="#{edicion=='TRUE'?true:false}" ajax="false">
+                        	<p:ajax event="dialogReturn" update=":#{p:component('datosIngsalDet')}" />
+                        </p:commandButton>
+                        
+                        <p:dataTable id="datosIngsalDet" value="#{ingsalBienDetController.listaIngsalBienDet}" var="listaDet" paginator="true" rows="10" emptyMessage="No se encontraron registros">
+							<p:column headerText="Opciones">
+								<p:commandButton type="submit" value="Editar" icon="ui-icon-extlink" action="#{solicitudIngsalController.editar(listaIngsal.idSolIngsal)}" />
+							</p:column>
+							
+							<p:column filterBy="#{listaDet.idActivo}" sortBy="#{listaDet.idActivo}" headerText="Activo" rendered="#{ingresoSalida=='6118'?true:false}" >
+								<h:outputText value="#{listaDet.idActivo}" />
+							</p:column>
+							<p:column filterBy="#{listaDet.accesNoInv}" sortBy="#{listaDet.accesNoInv}" headerText="Accesorios no inventariados" rendered="#{ingresoSalida=='6118'?true:false}">
+								<h:outputText value="#{listaDet.accesNoInv}" />
+							</p:column>
+							<p:column filterBy="#{listaDet.detalleAccesNoInv}" sortBy="#{listaDet.detalleAccesNoInv}" headerText="Detalle no inventariados" rendered="#{ingresoSalida=='6118'?true:false}">
+								<h:outputText value="#{listaDet.detalleAccesNoInv}" />
+							</p:column>
+							
+							<p:column filterBy="#{listaDet.bienExtDescripcion}" sortBy="#{listaDet.bienExtDescripcion}" headerText="Bien externo" rendered="#{ingresoSalida=='6117'?true:false}">
+								<h:outputText value="#{listaDet.bienExtDescripcion}" />
+							</p:column>
+							<p:column filterBy="#{listaDet.bienExtMarca}" sortBy="#{listaDet.bienExtMarca}" headerText="Marca" rendered="#{ingresoSalida=='6117'?true:false}">
+								<h:outputText value="#{listaDet.bienExtMarca}" />
+							</p:column>
+							<p:column filterBy="#{listaDet.bienExtSerie}" sortBy="#{listaDet.bienExtSerie}" headerText="Serie" rendered="#{ingresoSalida=='6117'?true:false}">
+								<h:outputText value="#{listaDet.bienExtSerie}" />
+							</p:column>
+							<p:column filterBy="#{listaDet.bienExtAccesorios}" sortBy="#{listaDet.bienExtAccesorios}" headerText="Accesorios" rendered="#{ingresoSalida=='6117'?true:false}">
+								<h:outputText value="#{listaDet.bienExtAccesorios}" />
+							</p:column>
+							<p:column filterBy="#{listaDet.bienExtObs}"  sortBy="#{listaDet.bienExtObs}" headerText="Observaciones" rendered="#{ingresoSalida=='6117'?true:false}">
+								<h:outputText value="#{listaDet.bienExtObs}" />
+							</p:column>
+							
+							<p:commandButton value="Ver más detalles" action="#{solicitudIngsalController.verDetalleSolicitud(listaIngsal.idSolIngsal, listaIngsal.ingresoSalida)}" />
+							
+						</p:dataTable>
+                	</h:form>
+                </div>
+            </div>
+        </div>
+    </ui:define>
+</ui:composition>
